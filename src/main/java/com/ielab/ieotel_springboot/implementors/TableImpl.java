@@ -1,6 +1,7 @@
 package com.ielab.ieotel_springboot.implementors;
 
 
+import com.ielab.ieotel_springboot.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ielab.ieotel_springboot.models.Table;
@@ -27,13 +28,34 @@ public class TableImpl implements TableService {
         return this.tableRepository.findAll();
     }
 
-
+    @Override
     public Table saveTable(Table table){
 
         return this.tableRepository.save(table);
     }
 
+    @Override
+    public Table updateTable(String id, Table table){
+        Table tablemod = this.tableRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("Table not found for id: "+id));
+        tablemod.setNombrePlace(table.getNombrePlace());
+        tablemod.setCode(table.getCode());
+        tablemod.setOccupy(table.isOccupy());
+        tablemod.setUpdatedAt(LocalDateTime.now());
 
+        return this.tableRepository.save(tablemod);
+    }
+    @Override
+    public void deleteTable(String id){
+        Table tableDel = this.tableRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("Table not found for id: "+id));
+        this.tableRepository.deleteById(id);
+    }
 
+    @Override
+    public Table showTable(String id){
+        return this.tableRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("Table not found for id: "+id));
+    }
 
 }
