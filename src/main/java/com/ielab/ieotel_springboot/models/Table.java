@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import javax.annotation.Generated;
+
 import lombok.*;
 
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -18,8 +20,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document
 public class Table {
-	@Id @BsonId
-	private Long id;
+	@Id 
+	private String id;
 	private String code;
 	private int nombrePlace;
 	private boolean deleted;
