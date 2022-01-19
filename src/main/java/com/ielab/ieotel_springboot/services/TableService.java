@@ -8,5 +8,9 @@ public interface TableService {
 
     public List <Table> ListTables();
     public Table saveTable(Table table);
+    public Table updateTable(String id, Table table);
+    public void deleteTable(String id);
+    public Table showTable(String id);
+
 
 }
