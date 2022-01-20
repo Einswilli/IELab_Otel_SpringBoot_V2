@@ -30,7 +30,7 @@ public class FoodTypeController {
         }else
         {
             foodTypeService.saveFoodType(foodType);
-            return new ResponseEntity("Food type saved...", HttpStatus.OK);
+            return new ResponseEntity("Food tye saved...", HttpStatus.OK);
         }
     }
 

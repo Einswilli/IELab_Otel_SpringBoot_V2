@@ -25,7 +25,7 @@ public class TableController {
     public ResponseEntity<?> saveTable(@RequestBody Table table) {
         Table tableTest = tableService.showTableCode(table.getCode());
         if(tableTest.getId() != null){
-            return new ResponseEntity("Table non enregistrée car Tabe existe déjà pour code "+tableTest.getCode()
+            return new ResponseEntity("Table not save cause "+tableTest.getCode()
                     , HttpStatus.BAD_REQUEST);
         }else
         {
