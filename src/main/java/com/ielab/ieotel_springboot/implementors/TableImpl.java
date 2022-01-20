@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -58,4 +57,8 @@ public class TableImpl implements TableService {
                 .orElseThrow(()->new NotFoundException("Table not found for id: "+id));
     }
 
+    public Table showTableCode(String code){
+        return this.tableRepository.findByCode(code)
+                .orElseThrow(()->new NotFoundException("Table not found for code: "+code));
+    }
 }
