@@ -1,14 +1,16 @@
 package com.ielab.ieotel_springboot.repositories;
-import com.ielab.ieotel_springboot.models.DrinkType;
+
+import com.ielab.ieotel_springboot.models.RoomType;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface DrinkTypeRepository extends MongoRepository<DrinkType, String> {
+public interface RoomTypeRepository extends MongoRepository<RoomType, String> {
+
     @Query
-    List<DrinkType> findByLib(String lib);
+    List<RoomType> findByLib(String Lib);
+
 }

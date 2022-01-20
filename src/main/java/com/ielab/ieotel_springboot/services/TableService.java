@@ -12,5 +12,6 @@ public interface TableService {
     public Table updateTable(String id, Table table);
     public void deleteTable(String id);
     public Table showTable(String id);
+    public Table showTableCode(String code);
 
 }

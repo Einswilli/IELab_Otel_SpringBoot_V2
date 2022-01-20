@@ -3,16 +3,15 @@ package com.ielab.ieotel_springboot.controllers;
 import com.google.common.reflect.TypeToken;
 import com.ielab.ieotel_springboot.exceptions.NotFoundException;
 import com.ielab.ieotel_springboot.models.Table;
-import com.ielab.ieotel_springboot.repositories.TableRepository;
 import com.ielab.ieotel_springboot.services.TableService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/ieotel/api/Table")
 public class TableController {
@@ -24,8 +23,15 @@ public class TableController {
 
     @PostMapping(value = "/save")
     public ResponseEntity<?> saveTable(@RequestBody Table table) {
-        tableService.saveTable(table);
-        return new ResponseEntity("Table enregistrée...", HttpStatus.OK);
+        Table tableTest = tableService.showTableCode(table.getCode());
+        if(tableTest.getId() != null){
+            return new ResponseEntity("Table non enregistrée car Tabe existe déjà pour code "+tableTest.getCode()
+                    , HttpStatus.BAD_REQUEST);
+        }else
+        {
+            tableService.saveTable(table);
+            return new ResponseEntity("Table enregistrée...", HttpStatus.OK);
+        }
     }
 
     @GetMapping(value = "/all")
