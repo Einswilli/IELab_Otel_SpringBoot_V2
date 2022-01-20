@@ -1,47 +1,41 @@
 package com.ielab.ieotel_springboot.implementors;
 
+import com.ielab.ieotel_springboot.exceptions.NotFoundException;
 import com.ielab.ieotel_springboot.models.DrinkType;
 import com.ielab.ieotel_springboot.repositories.DrinkTypeRepository;
+import com.ielab.ieotel_springboot.services.DrinkTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 
 @Service
-public class DrinkTypeImpl {
+public class DrinkTypeImpl  implements DrinkTypeService {
     @Autowired
     private DrinkTypeRepository drinkTypeRepository;
-    //private Logger logger;
 
     @Override
-    public boolean createDrinkType(DrinkType drinkType) {
-        Optional<DrinkType> drinkTypeOptional= drinkTypeRepository.FindByDrinktype(drinkType.getLib());
-        if(drinkTypeOptional.isPresent()){
-            new ("This DrinkType is already exist");
-            return false;
-        }else{
-            drinkType.setCreatedAt(new Date());
-            drinkTypeRepository.save(drinkType);
-            return true;
-        }
-        // logger.CreationLogging("DrinkType","",drinkType.toString());
+    public DrinkType createDrinkType(DrinkType drinkType) {
+        drinkType.setCreatedAt(new Date());
+        return this.drinkTypeRepository.save(drinkType);
     }
 
     @Override
-    public boolean updateDrinkType(Long id, DrinkType drinkType) {
-        DrinkType drinkType1=drinkTypeRepository.findById(id).orElseThrow(()->new NotFoundException("DrinkType not found for this id::"+id));
+    public DrinkType updateDrinkType(String id, DrinkType drinkType) {
+        DrinkType drinkType1 = drinkTypeRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("DrinkType not found for this id::" + id));
         drinkType1.setLib(drinkType.getLib());
         drinkType1.setUpdatedAt(new Date());
         //logger.UpdateLogging("drinkType","",drinkType.toString(),drinkType1.toString());
-        drinkTypeRepository.save(drinkType1);
-        return true;
+        return drinkTypeRepository.save(drinkType1);
+
     }
 
     @Override
-    public boolean deleteDrinkType(Long id) {
+    public boolean deleteDrinkType(String id) {
         // logger.DeletionLogging("drinkType","","");
-        drinkTypeRepository.findById(id).orElseThrow(()->new NotFoundException("DrinkType not found for this id::"+id));
+        drinkTypeRepository.findById(id).orElseThrow(() -> new NotFoundException("DrinkType not found for this id::" + id));
         drinkTypeRepository.deleteById(id);
         return true;
     }
@@ -53,8 +47,15 @@ public class DrinkTypeImpl {
     }
 
     @Override
-    public DrinkType showDrinkType(Long id) {
+    public DrinkType showDrinkType(String id) {
         //logger.DeatailLogging("drinkType","");
-        return drinkTypeRepository.findById(id).orElseThrow(()-> new NotFoundException("DrinkType not found for this id:"+id));
+        return drinkTypeRepository.findById(id).orElseThrow(() -> new NotFoundException("DrinkType not found for this id:" + id));
     }
+
+    @Override
+    public List<DrinkType> showDrinkTypeByLib(String lib) {
+
+        return drinkTypeRepository.findByLib(lib);
+    }
+
 }
