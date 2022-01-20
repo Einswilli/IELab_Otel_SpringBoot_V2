@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface TableRepository extends MongoRepository<Table, Long> {
+
     @Query
     Optional <Table> findByCode(String Code);
     Optional <Table> findById(String id);

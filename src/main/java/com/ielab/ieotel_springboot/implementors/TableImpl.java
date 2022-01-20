@@ -23,14 +23,13 @@ public class TableImpl implements TableService {
 
     @Override
     public List<Table> ListTables() {
-        // returns a list of Tables
-        // log the action
-        //Logger.ListReadLogging("Tables","will get the connected user's name");
+
         return this.tableRepository.findAll();
     }
 
     @Override
     public Table saveTable(Table table){
+
         return this.tableRepository.save(table);
     }
 
