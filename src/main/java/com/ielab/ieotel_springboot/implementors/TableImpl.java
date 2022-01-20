@@ -29,12 +29,10 @@ public class TableImpl implements TableService {
         return this.tableRepository.findAll();
     }
 
-
+    @Override
     public Table saveTable(Table table){
         return this.tableRepository.save(table);
     }
-
-
 
 
 }

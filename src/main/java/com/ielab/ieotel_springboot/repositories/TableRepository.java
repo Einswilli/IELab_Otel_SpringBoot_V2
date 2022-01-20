@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface TableRepository extends MongoRepository<Table, Long> {
-    /*Optional <Table> findByCode(String Code);*/
+public interface TableRepository extends MongoRepository<Table, String> {
+    Table findByCode(String Code);
 }

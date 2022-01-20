@@ -8,5 +8,6 @@ public interface TableService {
 
     public List <Table> ListTables();
     public Table saveTable(Table table);
+    //public Table findTableByCode(String code);
 
 }

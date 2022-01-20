@@ -34,5 +34,9 @@ public class TableController {
         return modelMapper.map(list, typeToken.getType());
     }
 
+    //@GetMapping(value = "/show/{code}")
+    //public Table getTableByCode(@PathVariable (value = "code") String code){
+        //return tableService.findTableByCode(code);
+    //}
 
 }
