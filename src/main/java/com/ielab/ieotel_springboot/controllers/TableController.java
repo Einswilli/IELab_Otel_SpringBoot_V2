@@ -1,6 +1,7 @@
 package com.ielab.ieotel_springboot.controllers;
 
 import com.google.common.reflect.TypeToken;
+import com.ielab.ieotel_springboot.exceptions.NotFoundException;
 import com.ielab.ieotel_springboot.models.Table;
 import com.ielab.ieotel_springboot.repositories.TableRepository;
 import com.ielab.ieotel_springboot.services.TableService;
@@ -34,9 +35,26 @@ public class TableController {
         return modelMapper.map(list, typeToken.getType());
     }
 
-    //@GetMapping(value = "/show/{code}")
-    //public Table getTableByCode(@PathVariable (value = "code") String code){
-        //return tableService.findTableByCode(code);
-    //}
+
+    @GetMapping(value = "/show/{id}")
+    public ResponseEntity<?> showTable(@PathVariable("id") String id) {
+        try {
+            return new ResponseEntity<>(tableService.showTable(id), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<?> updateTable(@PathVariable("id")String id, @RequestBody Table table ){
+        tableService.updateTable(id, table);
+        return new ResponseEntity("Table moodifiée...", HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "delete/{id}")
+    public ResponseEntity<?> deleteTable(@PathVariable("id")String id){
+        tableService.deleteTable(id);
+        return new ResponseEntity("Table supprimée...", HttpStatus.OK);
+    }
 
 }
