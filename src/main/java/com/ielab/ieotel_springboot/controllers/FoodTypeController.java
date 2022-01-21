@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -21,19 +22,25 @@ public class FoodTypeController {
     private FoodTypeRepository ftr;
 
     @Autowired
+    private FoodTypeRepository foodTypeRepository;
+
+    @Autowired
     public ModelMapper modelMapper;
+
+
 
     @PostMapping(value = "/save")
     public ResponseEntity<?> saveFoodType(@RequestBody FoodType foodType) {
-        FoodType foodTypeTest = foodTypeService.showFoodTypeLib(foodType.getLib());
-        //boolean v= this.ftr.existsById(id);
-        if(foodTypeTest.getId() != null){
-            return new ResponseEntity("Food Type not saved cause food type already exist fo lib: "+foodTypeTest.getLib()
-                    , HttpStatus.BAD_REQUEST);
+
+        if(foodTypeRepository.findByLib(foodType.getLib()).isEmpty()){
+            foodType.setCreatedAt(new Date());
+            foodTypeService.saveFoodType(foodType);
+            return new ResponseEntity("Food tye saved...", HttpStatus.OK);
         }else
         {
-            foodTypeService.saveFoodType(foodType);
-            return new ResponseEntity("Food type saved...", HttpStatus.OK);
+
+            return new ResponseEntity("Food Type not saved cause food type already exist for lib: "+foodType.getLib()
+                    , HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -55,8 +62,17 @@ public class FoodTypeController {
 
     @PutMapping(value = "/update/{id}")
     public ResponseEntity<?> updateTable(@PathVariable("id")String id, @RequestBody FoodType foodType ){
-        foodTypeService.updateFoodType(id, foodType);
-        return new ResponseEntity("Food type updated...", HttpStatus.OK);
+
+        if(foodTypeRepository.findById(foodType.getId()).isEmpty()){
+            foodType.setUpdatedAt(new Date());
+            foodTypeService.saveFoodType(foodType);
+            return new ResponseEntity("Food type successful updated..."
+                    , HttpStatus.OK);
+        }else
+        {
+            return new ResponseEntity("Food Type not updated cause food type not exist for id: "+foodType.getId()
+                    , HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping(value = "delete/{id}")
