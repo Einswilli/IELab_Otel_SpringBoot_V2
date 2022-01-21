@@ -3,6 +3,7 @@ package com.ielab.ieotel_springboot.controllers;
 import com.google.common.reflect.TypeToken;
 import com.ielab.ieotel_springboot.exceptions.NotFoundException;
 import com.ielab.ieotel_springboot.models.FoodType;
+import com.ielab.ieotel_springboot.repositories.FoodTypeRepository;
 import com.ielab.ieotel_springboot.services.FoodTypeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.List;
 public class FoodTypeController {
     @Autowired
     private FoodTypeService foodTypeService;
+    private FoodTypeRepository ftr;
 
     @Autowired
     public ModelMapper modelMapper;
@@ -24,6 +26,7 @@ public class FoodTypeController {
     @PostMapping(value = "/save")
     public ResponseEntity<?> saveFoodType(@RequestBody FoodType foodType) {
         FoodType foodTypeTest = foodTypeService.showFoodTypeLib(foodType.getLib());
+        //boolean v= this.ftr.existsById(id);
         if(foodTypeTest.getId() != null){
             return new ResponseEntity("Food Type not saved cause food type already exist fo lib: "+foodTypeTest.getLib()
                     , HttpStatus.BAD_REQUEST);

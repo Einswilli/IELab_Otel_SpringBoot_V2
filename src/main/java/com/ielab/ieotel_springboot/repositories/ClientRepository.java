@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ClientRepository extends MongoRepository<Client,Long> {
+public interface ClientRepository extends MongoRepository<Client,String> {
     @Query(value = "firstName:'?0',lastName:'?0',email:'?0'",fields = "'id':1")
     Optional<Client> findByClient(String firstName,String lastName,String email);
 

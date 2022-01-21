@@ -9,7 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface FoodTypeRepository extends MongoRepository<FoodType, String> {
-    @Query
+    
+    @Query("{lib:?0}")
     Optional <FoodType> findByLib(String lib);
     Optional <FoodType> findById(String id);
     void deleteById(String id);
