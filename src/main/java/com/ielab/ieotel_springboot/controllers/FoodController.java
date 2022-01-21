@@ -3,6 +3,7 @@ package com.ielab.ieotel_springboot.controllers;
 import com.google.common.reflect.TypeToken;
 import com.ielab.ieotel_springboot.exceptions.NotFoundException;
 import com.ielab.ieotel_springboot.models.Food;
+import com.ielab.ieotel_springboot.repositories.FoodRepository;
 import com.ielab.ieotel_springboot.services.FoodService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,18 +22,22 @@ public class FoodController {
     private FoodService foodService;
 
     @Autowired
+    private FoodRepository foodRepository;
+
+    @Autowired
     public ModelMapper modelMapper;
 
     @PostMapping(value = "/save")
     public ResponseEntity<?> saveTable(@RequestBody Food food) {
-        Food foodTest = foodService.showFoodName(food.getName());
-        if(foodTest.getId() != null){
-            return new ResponseEntity("Table not save cause "+foodTest.getName()
-                    , HttpStatus.BAD_REQUEST);
+        if(foodRepository.findByName(food.getName()).isEmpty()){
+            food.setCreatedAt(new Date());
+            foodService.saveFood(food);
+            return new ResponseEntity("Food saved ..."
+                    , HttpStatus.OK);
         }else
         {
-            foodService.saveFood(food);
-            return new ResponseEntity("Table enregistrée...", HttpStatus.OK);
+            return new ResponseEntity("Food not saved caus food already exist for name..."+food.getName()
+                    , HttpStatus.BAD_REQUEST);
         }
     }
 

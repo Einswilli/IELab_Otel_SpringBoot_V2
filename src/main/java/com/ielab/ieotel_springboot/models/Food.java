@@ -13,7 +13,7 @@ import java.util.Date;
 public class Food {
 
     @Id
-    private Long id;
+    private String id;
     private String lib;
     private String name;
     private Float price;
