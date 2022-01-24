@@ -19,8 +19,6 @@ import java.util.List;
 public class FoodTypeController {
     @Autowired
     private FoodTypeService foodTypeService;
-    private FoodTypeRepository ftr;
-
     @Autowired
     private FoodTypeRepository foodTypeRepository;
 
