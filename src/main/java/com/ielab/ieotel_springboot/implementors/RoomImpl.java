@@ -24,7 +24,7 @@ public class RoomImpl implements RoomService {
 
     @Override
     public Room showRoom(String id) {
-        return roomRepository.findById(id).orElseThrow(()->new NotFoundException("Room not found for this id :: " + id));
+        return roomRepository.findById(id).orElseThrow(()->new NotFoundException("Room not found for this id: " + id));
     }
 
     @Override
