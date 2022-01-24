@@ -21,7 +21,7 @@ public class Manager {
     private String email;
     private String address;
     private String grade;
-    private ManagerType managerType;
+    //private ManagerType managerType;
     private Date deletedAt;
     private Date updatedAt;
     private Date createdAt;

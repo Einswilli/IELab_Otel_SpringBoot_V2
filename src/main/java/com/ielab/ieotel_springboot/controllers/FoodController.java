@@ -60,15 +60,30 @@ public class FoodController {
     }
 
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<?> updateFood(@PathVariable("id")String id, @RequestBody Food food ){
-        foodService.updateFood(id, food);
-        return new ResponseEntity("Food successful updated...", HttpStatus.OK);
+    public ResponseEntity<?> updateFood(@PathVariable("id")String id, @RequestBody Food food){
+
+        if(foodRepository.findById(id).isEmpty()){
+            return new ResponseEntity("Food not updated cause food not exist for id: "+food.getId()
+                    , HttpStatus.BAD_REQUEST);
+        
+        }else
+        {
+            Food foodMod = this.foodRepository.findById(id)
+            .orElseThrow(()->new NotFoundException("_"));
+            foodMod.setLib(food.getLib());
+            foodMod.setName(food.getName());
+            foodMod.setPrice(food.getPrice());
+            foodMod.setUpdatedAt(new Date());
+            foodRepository.save(foodMod);
+            return new ResponseEntity("Food successful updated..."
+            , HttpStatus.OK);
+        }
     }
 
     @DeleteMapping(value = "delete/{id}")
     public ResponseEntity<?> deleteFood(@PathVariable("id")String id){
         foodService.deleteFood(id);
-        return new ResponseEntity("Table supprimée...", HttpStatus.OK);
+        return new ResponseEntity("Food deleted...", HttpStatus.OK);
     }
 
 

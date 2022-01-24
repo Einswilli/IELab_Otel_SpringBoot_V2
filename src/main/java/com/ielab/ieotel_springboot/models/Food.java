@@ -17,6 +17,7 @@ public class Food {
     private String lib;
     private String name;
     private Float price;
+    //private FoodType foodType;
     private Date createdAt;
     private Date updatedAt;
 }

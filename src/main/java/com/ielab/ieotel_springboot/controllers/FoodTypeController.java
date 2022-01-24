@@ -63,15 +63,19 @@ public class FoodTypeController {
     @PutMapping(value = "/update/{id}")
     public ResponseEntity<?> updateTable(@PathVariable("id")String id, @RequestBody FoodType foodType ){
 
-        if(foodTypeRepository.findById(foodType.getId()).isEmpty()){
-            foodType.setUpdatedAt(new Date());
-            foodTypeService.saveFoodType(foodType);
-            return new ResponseEntity("Food type successful updated..."
-                    , HttpStatus.OK);
-        }else
-        {
+        if(foodTypeRepository.findById(id).isEmpty()){
             return new ResponseEntity("Food Type not updated cause food type not exist for id: "+foodType.getId()
                     , HttpStatus.BAD_REQUEST);
+        
+        }else
+        {
+            FoodType foodTypeMod = this.foodTypeRepository.findById(id)
+            .orElseThrow(()->new NotFoundException("_"));
+            foodTypeMod.setLib(foodType.getLib());
+            foodTypeMod.setUpdatedAt(new Date());
+            foodTypeRepository.save(foodTypeMod);
+            return new ResponseEntity("Food type successful updated..."
+            , HttpStatus.OK);
         }
     }
 
