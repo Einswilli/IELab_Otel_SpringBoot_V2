@@ -37,7 +37,7 @@ public class ManagerTypeImpl implements ManagerTypeService {
 
     @Override
     public ManagerType saveManagerType(ManagerType managerType) {
-        managerType.setUpdatedAt(new Date());
+        managerType.setCreatedAt(new Date());
         return managerTypeRepository.save(managerType);
     }
 

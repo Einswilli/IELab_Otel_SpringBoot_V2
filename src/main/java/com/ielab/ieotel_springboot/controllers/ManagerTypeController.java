@@ -46,37 +46,44 @@ public class ManagerTypeController {
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity<?> saveFoodType(@RequestBody ManagerType managerType) {
+    public ResponseEntity<?> saveManagerType(@RequestBody ManagerType managerType) {
         if(managerTypeRepository.findByLib(managerType.getLib()).isEmpty()){
-            managerType.setCreatedAt(new Date());
             managerTypeService.saveManagerType(managerType);
-            return new ResponseEntity("Food tye saved...", HttpStatus.OK);
+            return new ResponseEntity("Manager type saved...", HttpStatus.OK);
         }else
         {
-            return new ResponseEntity("Food Type not saved cause food type already exist for lib: "+managerType.getLib()
+            return new ResponseEntity("Manager Type not saved cause food type already exist for lib: "+managerType.getLib()
                     , HttpStatus.BAD_REQUEST);
+                    
         }
     }
 
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<?> updateTable(@PathVariable("id")String id, @RequestBody ManagerType managerType){
+    public ResponseEntity<?> updateManager(@PathVariable("id")String id, @RequestBody ManagerType managerType){
 
-        if(managerTypeRepository.findById(managerType.getId()).isEmpty()){
+        if(managerTypeRepository.findById(id).isEmpty()){
             managerType.setUpdatedAt(new Date());
             managerTypeService.saveManagerType(managerType);
-            return new ResponseEntity("Food type successful updated..."
-                    , HttpStatus.OK);
+            
+            return new ResponseEntity("Manager Type not updated cause food type not exist for id: "+managerType.getId()
+                , HttpStatus.BAD_REQUEST);
         }else
         {
-            return new ResponseEntity("Food Type not updated cause food type not exist for id: "+managerType.getId()
-                    , HttpStatus.BAD_REQUEST);
+            ManagerType managerTypeMod = this.managerTypeRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException("_"));
+                managerTypeMod.setUpdatedAt(new Date());
+                managerTypeMod.setLib(managerType.getLib());
+                managerTypeService.saveManagerType(managerTypeMod);
+
+            return new ResponseEntity("Manager type successful updated..."
+                , HttpStatus.OK);
         }
     }
 
     @DeleteMapping(value = "delete/{id}")
     public ResponseEntity<?> deleteTable(@PathVariable("id")String id){
         managerTypeService.deleteManagerType(id);
-        return new ResponseEntity("Food type deleted...", HttpStatus.OK);
+        return new ResponseEntity("Manager type deleted...", HttpStatus.OK);
     }
 
 }
