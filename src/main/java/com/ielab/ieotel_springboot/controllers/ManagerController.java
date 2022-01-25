@@ -38,7 +38,7 @@ public class ManagerController {
         {
 
             return new ResponseEntity("Manager not saved cause manager already exist for code: "+manager.getCode()
-                    , HttpStatus.BAD_REQUEST);
+                ,HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -83,7 +83,7 @@ public class ManagerController {
             managerDel.setUpdatedAt(new Date());
             managerRepository.save(managerDel);
             return new ResponseEntity("Manager successful updated..."
-            , HttpStatus.OK);
+                , HttpStatus.OK);
         }
     }
 
@@ -101,7 +101,7 @@ public class ManagerController {
             managerDel.setDeleted(true);
             managerRepository.save(managerDel);
             return new ResponseEntity("Manager successful updated..."
-            , HttpStatus.OK);
+                , HttpStatus.OK);
         }
     }
     

@@ -1,9 +1,10 @@
 package com.ielab.ieotel_springboot.models;
 
 import lombok.*;
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Id;
 import java.util.Date;
 
 @Getter
