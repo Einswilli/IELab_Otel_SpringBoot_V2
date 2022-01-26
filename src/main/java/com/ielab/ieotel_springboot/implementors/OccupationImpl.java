@@ -30,10 +30,6 @@ public class OccupationImpl implements OccupationService {
                 .orElseThrow(()->new NotFoundException("Occupation not found for id : "+id));
     }
 
-    @Override
-    public List<Occupation> showOccupations(String lib) {
-        return occupationRepository.findByLib(lib);
-    }
 
     @Override
     public Occupation createOccupation(Occupation occupation){
