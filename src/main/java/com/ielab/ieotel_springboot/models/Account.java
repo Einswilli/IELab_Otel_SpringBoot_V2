@@ -17,7 +17,7 @@ import java.util.List;
 @Document(collection = "Account")
 public class Account {
     @Id
-    private Long id;
+    private String id;
     private List<Event> events;
     private Client client;
     private Date date;
