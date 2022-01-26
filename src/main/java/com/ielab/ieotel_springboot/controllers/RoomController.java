@@ -2,8 +2,6 @@ package com.ielab.ieotel_springboot.controllers;
 
 import com.google.common.reflect.TypeToken;
 import com.ielab.ieotel_springboot.exceptions.NotFoundException;
-import com.ielab.ieotel_springboot.models.Drink;
-import com.ielab.ieotel_springboot.models.DrinkType;
 import com.ielab.ieotel_springboot.models.Room;
 import com.ielab.ieotel_springboot.repositories.RoomRepository;
 import com.ielab.ieotel_springboot.services.RoomService;

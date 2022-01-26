@@ -1,7 +1,6 @@
 package com.ielab.ieotel_springboot.implementors;
 
 import com.ielab.ieotel_springboot.exceptions.NotFoundException;
-import com.ielab.ieotel_springboot.models.DrinkType;
 import com.ielab.ieotel_springboot.models.RoomType;
 import com.ielab.ieotel_springboot.repositories.RoomTypeRepository;
 import com.ielab.ieotel_springboot.services.RoomTypeService;

@@ -46,7 +46,7 @@ public class RoomTypeController {
     }
 
     @GetMapping("/Show/{id}")
-    public ResponseEntity<?> showDrinkType(@PathVariable("id") String id) {
+    public ResponseEntity<?> showRoomType(@PathVariable("id") String id) {
         try {
             return new ResponseEntity<>(roomTypeService.showRoomType(id), HttpStatus.OK);
         } catch (NotFoundException e) {
@@ -55,7 +55,7 @@ public class RoomTypeController {
     }
 
     @PutMapping("/Update/{id}")
-    public ResponseEntity<?> updateDrinkType(@PathVariable("id") String id, @RequestBody RoomType roomType) {
+    public ResponseEntity<?> updateRoomType(@PathVariable("id") String id, @RequestBody RoomType roomType) {
         if(roomTypeRepository.findById(id).isEmpty()){
             return  new ResponseEntity<>("RoomType Not found by id:"+id, HttpStatus.NOT_FOUND);
         }else{
@@ -65,12 +65,12 @@ public class RoomTypeController {
     }
 
     @DeleteMapping(value = "delete/{id}")
-    public ResponseEntity<?> deleteTable(@PathVariable("id")String id){
+    public ResponseEntity<?> deleteRomType(@PathVariable("id")String id){
         if(roomTypeRepository.findById(id).isEmpty()){
-            return new ResponseEntity<>("RoomType Not Found by id:: "+id, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Room Type Not Found by id:: "+id, HttpStatus.NOT_FOUND);
         }else{
             roomTypeService.deleteRoomType(id);
-            return new ResponseEntity<>("RoomType is succesfully delete By id::"+id,HttpStatus.OK);
+            return new ResponseEntity<>("Room Type is succesfully delete By id::"+id,HttpStatus.OK);
         }
     }
 }
