@@ -21,4 +21,11 @@ public interface ClientRepository extends MongoRepository<Client,String> {
 
     @Query("{code:?0}")
     public List<Client> existsByCode(String code);
+
+    boolean existsClientByCode(String code);
+
+    //@Override
+    //boolean exists(String code) {
+        //return mongoOperations.exists(getIdQuery(id), entityClass);
+     // }
 }

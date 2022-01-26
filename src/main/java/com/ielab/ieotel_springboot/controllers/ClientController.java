@@ -7,6 +7,7 @@ import com.ielab.ieotel_springboot.repositories.*;
 import com.ielab.ieotel_springboot.services.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,15 +35,19 @@ public class ClientController {
         List<Client> v=this.cltService.existsByCode(clt.getCode());
         System.out.println(clt.getCode());
 
-        if(!v.isEmpty()){
+        try{
+            if(!v.isEmpty()){
 
-            //Client c=this.cltService.showClientByCode(clt.getCode());
-            this.msg="Ce Client exist déjà...";
-        }else{
-            // Cool We gonna save him!
-            
-            cltService.saveClient(clt);
-            this.msg= "Client enregistrée...";
+                //Client c=this.cltService.showClientByCode(clt.getCode());
+                this.msg="Ce Client exist déjà...";
+            }else{
+                // Cool We gonna save him!
+                
+                cltService.saveClient(clt);
+                this.msg= "Client enregistrée...";
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
 
         return new ResponseEntity(this.msg, HttpStatus.OK);
@@ -67,6 +72,24 @@ public class ClientController {
     }
 
     private String GenCode(Client c){
-        return ""+ZonedDateTime.now().getYear()+"000"+c.getFirstName().substring(0, 2)+c.getTel().substring(0, 3)+c.getLastName().substring(1, 3)+c.getTel().substring(2, 5);
+        List<Client> list = cltService.listClient();
+        String code;
+        try{
+            code=""+ZonedDateTime.now().getYear()+"000"+list.size()+""+c.getFirstName().substring(0, 2)+c.getTel().substring(0, 3)+c.getLastName().substring(1, 3)+c.getTel().substring(c.getTel().length()-2, c.getTel().length());
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            code="Code generation error";
+        }
+        return code;
+    }
+
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<?> updateCommand(@PathVariable("id") String id, @RequestBody Client client) {
+        if (this.crepo.existsById(id)) {
+            return new ResponseEntity("Client By ID:" + id+" Not found", HttpStatus.NOT_FOUND);
+        } else {
+            this.cltService.updateClient(id, client);
+            return new ResponseEntity("Client updated succesfully!", HttpStatus.OK);
+        }
     }
 }

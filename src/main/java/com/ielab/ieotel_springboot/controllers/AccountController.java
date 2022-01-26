@@ -43,7 +43,7 @@ public class AccountController {
         try {
             return new ResponseEntity<>(acService.showAccount(id), HttpStatus.OK);
         } catch (NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Account By ID: "+id+" Not Found!", HttpStatus.NOT_FOUND);
         }
     }
 }
